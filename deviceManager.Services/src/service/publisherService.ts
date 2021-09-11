@@ -15,10 +15,12 @@ export  const SendMessage =async(message:string,queueName:string)=> {
                    channel.sendToQueue(queueName, Buffer.from(message));
                    console.log(" [x] Sent %s", message);
                });
+        /*
         setTimeout(function() {
             connection.close();
             process.exit(0);
         }, 500);
+        */
     });
 };
 

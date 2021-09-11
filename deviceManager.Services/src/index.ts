@@ -1,11 +1,11 @@
 import {InitConnection} from "./config/dataBase";
 import server from "./config/server";
-import {createDeviceManagerRandomTemperatureRequest,createDeviceManagerRandomTemperatureRequest1} from "./service/deviceManagerService";
+import {createDeviceManagerRandomTemperatureRequest} from "./service/deviceManagerService";
 if (!process.env.PORT) {
     process.exit(1);
 }
 const PORT: number = parseInt(process.env.PORT as string, 10);
-
+const INTERVAL_MS:number= parseInt(process.env.INTERVAL_MS as string, 1000);
 /**
  * Server Activation
  */
@@ -18,10 +18,9 @@ InitConnection().then(() => {
     }).on('listening', () => {
         console.log('✔ Application Started');
         console.log(`Listening on port  http://localhost:${PORT}`);
-
+        setInterval(() => createDeviceManagerRandomTemperatureRequest(), INTERVAL_MS);
     });
 }).catch((err: any) => {
     console.log('✘ db connection failed',err.message)
     process.exit(1);
 })
-setInterval(() => createDeviceManagerRandomTemperatureRequest1(), 1000);

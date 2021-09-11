@@ -15,6 +15,7 @@
     "@nartc/automapper": "^7.0.4",
     "amqplib": "^0.8.0",
     "auto-bind": "^4.0.0",
+    "axios": "^0.21.4",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
