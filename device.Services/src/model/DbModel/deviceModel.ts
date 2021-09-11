@@ -1,4 +1,3 @@
-import {BaseDto} from "../UiModel/baseDto";
 import {Document, model, Model, Schema} from "mongoose";
 import {BaseModel} from "./baseModel";
 

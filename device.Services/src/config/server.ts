@@ -9,9 +9,6 @@ import {deviceRouter} from "../router/deviceRouter";
 dotenv.config();
 const server = express();
 try {
-
-
-
     /**
      *  App Configuration
      */

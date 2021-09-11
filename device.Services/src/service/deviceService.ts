@@ -1,6 +1,6 @@
 import * as  DeviceRepository from "../repository/deviceRepository";
 import {DeviceDto} from "../model/UiModel/DeviceDto";
-import {SendMessage} from "../queue/publisher";
+import {SendMessage} from "./publisherService";
 
 export const findAll = async () => {
     return await  DeviceRepository.findAll()
