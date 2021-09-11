@@ -1,6 +1,6 @@
 import {AutoMap} from "@nartc/automapper";
 
-export class DeviceResponse {
+export class DeviceDto {
     @AutoMap()
     deviceName: string;
     @AutoMap()

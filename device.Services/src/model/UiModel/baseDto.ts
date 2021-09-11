@@ -1,13 +1,12 @@
-import exp from "constants";
 import {ValidationError} from "./validationError";
 
-export interface IBaseResopnse{
+export interface IBaseDto{
     response?:any,
     Errors?:ValidationError[]
     responseOn:Date
 }
 
-export class BaseResopnse implements IBaseResopnse{
+export class BaseDto implements IBaseDto{
     response?:any;
     Errors?:ValidationError[];
     responseOn:Date=new Date()

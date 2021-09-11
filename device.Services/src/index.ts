@@ -7,7 +7,6 @@ if (!process.env.PORT) {
 }
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
-//SendMessage('tttttttttttttttttttt','rrrrrrrrrrrrrrrrrrrrr');
 /**
  * Server Activation
  */

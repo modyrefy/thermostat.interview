@@ -1,14 +1,14 @@
 import express, {Request, Response} from "express";
-import {IDeviceModel} from "../model/deviceModel";
+import {IDeviceModel} from "../model/DbModel/deviceModel";
 import * as DeviceService from "../service/deviceService";
-import {BaseResopnse} from "../model/baseResponse";
-import {ValidationError} from "../model/validationError";
-import {create} from "../service/deviceService";
+import {BaseDto} from "../model/UiModel/baseDto";
+import {ValidationError} from "../model/UiModel/validationError";
+import {create} from "../repository/deviceRepository";
 
 export const deviceRouter = express.Router();
 //get
 deviceRouter.get("/", async (req: Request, res: Response) => {
-     var  result  = new BaseResopnse();
+     var  result  = new BaseDto();
     try {
         result.response=await DeviceService.findAll();
         res.status(200).send(result);
@@ -21,7 +21,7 @@ deviceRouter.get("/", async (req: Request, res: Response) => {
 });
 
 deviceRouter.get("/:id", async (req: Request, res: Response) => {
-    var  result  = new BaseResopnse();
+    var  result  = new BaseDto();
     try {
         const id: string = req.params.id;
         result.response = await DeviceService.findById(id);
@@ -36,7 +36,7 @@ deviceRouter.get("/:id", async (req: Request, res: Response) => {
 });
 
 deviceRouter.post("/", async (req: Request, res: Response) => {
-    var  result  = new BaseResopnse();
+    var  result  = new BaseDto();
     try {
         const item:IDeviceModel = req.body;
         result.response = await DeviceService.create(item);
