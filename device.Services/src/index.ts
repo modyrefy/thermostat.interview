@@ -1,6 +1,5 @@
 import {InitConnection} from "./config/dataBase";
 import server from "./config/server";
-import {SendMessage} from "./service/publisherService";
 
 if (!process.env.PORT) {
     process.exit(1);
