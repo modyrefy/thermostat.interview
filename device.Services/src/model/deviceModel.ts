@@ -1,5 +1,7 @@
 import {BaseModel} from "./baseModel";
 import {Document, model, Model, Schema} from "mongoose";
+import {AutoMap} from "@nartc/automapper";
+
 export interface IDeviceModel extends BaseModel,Document {
     deviceName: string;
     deviceType: string;

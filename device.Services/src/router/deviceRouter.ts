@@ -39,7 +39,6 @@ deviceRouter.post("/", async (req: Request, res: Response) => {
     var  result  = new BaseResopnse();
     try {
         const item:IDeviceModel = req.body;
-
         result.response = await DeviceService.create(item);
         res.status(200).send(result);
 

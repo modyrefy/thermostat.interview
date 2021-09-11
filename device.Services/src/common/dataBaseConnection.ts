@@ -10,6 +10,25 @@ mongoose.connect(
     console.log(err);
 });
 
+// If the connection throws an error
+mongoose.connection.on('error',function (err:any) {
+    console.log('Mongoose default connection error: ' + err);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', function () {
+    console.log('Mongoose default connection disconnected');
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', function() {
+    mongoose.connection.close(function () {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
+
+/*
 const conn = mongoose.connection;
 
 conn.on('connected', function() {
@@ -20,3 +39,4 @@ conn.on('disconnected',function(){
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
+*/
