@@ -56,7 +56,8 @@ export const updateRow = async (item: DeviceDto) => {
             return null;
         }
     }
-};
+}
+;
 
 export const deleteRow = async (item: DeviceDto) => {
     if (item != null) {
