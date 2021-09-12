@@ -1,7 +1,7 @@
-import {QueueMode} from "../model/queueModel/queueModel";
+import {QueueModel} from "../model/queueModel/queueModel";
 
 var amqp = require('amqplib/callback_api');
-export  const SendMessage =async(message:string,queueName:string)=> {
+export  const SendMessage =async(message:QueueModel)=> {
     amqp.connect(process.env.RABBIT_MQ_CONNECTION, function (error: any, connection: any) {
         if (error) {
             throw error;
@@ -10,10 +10,10 @@ export  const SendMessage =async(message:string,queueName:string)=> {
             if (error) {
                 throw error;
             }
-            channel.assertQueue(queueName, {
+            channel.assertQueue(message.queueName, {
                 durable: false
             });
-            channel.sendToQueue(queueName, Buffer.from(JSON.stringify(new QueueMode(message,process.env.RABBIT_MQ_TYPE as string))));
+            channel.sendToQueue(message.queueName, Buffer.from(JSON.stringify(message)));
             console.log(" [x] Sent %s", message);
         });
         /*
