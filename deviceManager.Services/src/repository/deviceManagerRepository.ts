@@ -1,5 +1,5 @@
-import {DeviceManagerModel} from "../model/DbModel/deviceManagerModel";
-import {DeviceManagerDto} from "../model/UiModel/DeviceManagerDto";
+import {DeviceManagerModel} from "../model/dbModel/deviceManagerModel";
+import {DeviceManagerDto} from "../model/uiModel/DeviceManagerDto";
 
 
 export const findAll = async () => {
