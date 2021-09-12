@@ -1,5 +1,5 @@
-import {DeviceModel} from "../model/DbModel/deviceModel";
-import {DeviceDto} from "../model/UiModel/DeviceDto";
+import {DeviceModel} from "../model/dbModel/deviceModel";
+import {DeviceDto} from "../model/uiModel/DeviceDto";
 
 
 export const findAll = async () => {
@@ -27,7 +27,7 @@ export const findById = async (id: string) => {
     return null;
 };
 
-export const create = async (item: DeviceDto) => {
+export const createRow = async (item: DeviceDto) => {
     if (item != null) {
         var request = new DeviceModel();
         request.deviceType = item.deviceType;
@@ -39,5 +39,37 @@ export const create = async (item: DeviceDto) => {
         }
         return null;
     }
+};
 
+export const updateRow = async (item: DeviceDto) => {
+    if (item != null) {
+        var request=await DeviceModel.findById(item.id);
+        if(request!=null)
+        {
+            request.deviceType = item.deviceType;
+            request.deviceName = item.deviceName
+            var response = await DeviceModel.findByIdAndUpdate(item.id,item);
+            if (response != null) {
+                item.id = response._id;
+                return item;
+            }
+            return null;
+        }
+    }
+};
+
+export const deleteRow = async (item: DeviceDto) => {
+    if (item != null) {
+        var request=await DeviceModel.findById(item.id);
+        if(request!=null)
+        {
+            request.isActive =false;
+            var response = await DeviceModel.findByIdAndUpdate(item.id,request);
+            if (response != null) {
+                item.id = response._id;
+                return item;
+            }
+            return null;
+        }
+    }
 };

@@ -1,5 +1,5 @@
 import * as  DeviceRepository from "../repository/deviceRepository";
-import {DeviceDto} from "../model/UiModel/DeviceDto";
+import {DeviceDto} from "../model/uiModel/DeviceDto";
 import {SendMessage} from "./publisherService";
 
 export const findAll = async () => {
@@ -10,11 +10,31 @@ export const findById = async (id: string) => {
     return await  DeviceRepository.findById(id);
 };
 
-export const create = async (item: DeviceDto) => {
-    var result = await  DeviceRepository.create(item);
+export const createRow = async (item: DeviceDto) => {
+    var result = await  DeviceRepository.createRow(item);
     if(result !=null  && result.id !==null && result.id !==undefined)
     {
         SendMessage(`device-id ${result.id}`, process.env.RABBIT_MQ_DEVICE_QUEUE as string);
     }
     return result;
 };
+
+export const updateRow = async (item: DeviceDto) => {
+    var result = await  DeviceRepository.updateRow(item);
+    if(result !=null  && result.id !==null && result.id !==undefined)
+    {
+        SendMessage(`device-id ${result.id}`, process.env.RABBIT_MQ_DEVICE_QUEUE as string);
+    }
+    return result;
+};
+
+export const deleteRow = async (item: DeviceDto) => {
+    var result = await  DeviceRepository.deleteRow(item);
+    if(result !=null  && result.id !==null && result.id !==undefined)
+    {
+        SendMessage(`device-id ${result.id}`, process.env.RABBIT_MQ_DEVICE_QUEUE as string);
+    }
+    return result;
+};
+
+
