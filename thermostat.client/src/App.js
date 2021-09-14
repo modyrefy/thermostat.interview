@@ -1,11 +1,17 @@
 
 import DeviceDetail from "./component/device/deviceDetail"
-require('dotenv').config();
+import {DeviceTemperature} from "./component/device/deviceTemperature";
+import {BrowserRouter,Route} from "react-router-dom";
+
 
 function App() {
   return (
     <div className="App">
-      <DeviceDetail/>
+        <BrowserRouter>
+            <Route path="/device"  component={DeviceDetail} />
+            <Route path="/device/temperature"  component={DeviceTemperature} />
+        </BrowserRouter>
+        <DeviceDetail/>
     </div>
   );
 }
