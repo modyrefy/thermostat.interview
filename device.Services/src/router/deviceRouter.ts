@@ -6,6 +6,36 @@ import {ValidationError} from "../model/uiModel/validationError";
 
 export const deviceRouter = express.Router();
 //get
+
+deviceRouter.get("/filter/date",async (req: Request, res: Response) => {
+
+    var fromDate :Date =new Date(req.query.fromDate as string);
+  var toDate :Date =new Date (req.query.toDate as string);
+    var  result  = new BaseDto();
+    try {
+        result.response=await DeviceService.filterByDate(fromDate as Date,toDate as Date);
+        res.status(200).send(result);
+    } catch (e: any) {
+        var errorList : ValidationError[]=[];
+        errorList.push(new ValidationError(e.message));
+        result.Errors=errorList;
+        res.status(500).send(result);
+    }
+});
+deviceRouter.get("/transaction/:count", async (req: Request, res: Response) => {
+    var  result  = new BaseDto();
+    try {
+        const transctionsCount: number =parseInt( req.params.count) ;
+        result.response=await DeviceService.populate(transctionsCount);
+        res.status(200).send(result);
+    } catch (e: any) {
+        var errorList : ValidationError[]=[];
+        errorList.push(new ValidationError(e.message));
+        result.Errors=errorList;
+        res.status(500).send(result);
+    }
+});
+
 deviceRouter.get("/", async (req: Request, res: Response) => {
      var  result  = new BaseDto();
     try {

@@ -9,5 +9,11 @@ export const  InitConnection=async ()=>{
             //useMongoClient: true
         }
     );
+  /*
+    mongoose.connection.db.listCollections().toArray(function (err:any, names:any) {
+        console.log(names); // [{ name: 'dbname.myCollection' }]
+        module.exports.Collection = names;
+    });
+    */
     mongoose.Promise = global.Promise;
 };

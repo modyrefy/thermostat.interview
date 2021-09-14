@@ -12,6 +12,7 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
  */
 InitConnection().then(() => {
     console.log('✔ db connection start');
+
     server.listen(PORT).on('error', (err: any) => {
         console.log('✘ Application failed to start');
         console.error('✘', err.message);
