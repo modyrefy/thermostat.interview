@@ -5,7 +5,7 @@ export function SocketBox({socket,notificationMessage,eventName,doAction}){
     const [isOPen,setIsOpen]=useState(false);
     useEffect(() => {
         const messageListener = (message) => {
-            console.log('message '+ message);
+          //  console.log('message '+ message);
             setIsOpen(true)
             doAction(message);
             //doAction();

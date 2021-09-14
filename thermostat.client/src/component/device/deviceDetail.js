@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     },
 });
 
-function DeviceDetail(props){
+export function DeviceDetail(props){
 
     const classes = useStyles();
     const [result, setResult] = useState([]);
@@ -203,4 +203,3 @@ function DeviceDetail(props){
 </React.Fragment>
     );
 };
-export  default DeviceDetail;

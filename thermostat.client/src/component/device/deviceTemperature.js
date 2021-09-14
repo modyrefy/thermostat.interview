@@ -13,23 +13,30 @@ const useStyles = makeStyles({
     },
 });
 
-export function DeviceTemperature(){
+export function DeviceTemperature(props){
     const classes = useStyles();
     const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
     const [socket, setSocket] = useState(null);
     const loadDataManually=(message)=>
     {
-        result.slice(0,1);
-        result.push(message);
-        //messageList.pop();
-        console.log(`new row added ` +JSON.stringify(result))
+        const request = JSON.parse(message);
+        if(request!=null && request.message !=null) {
+            setLoading(true);
+           // console.log(result);
+           result.pop();
+            result.push({...request.message});
+            //console.log('final  result'+ result);
+            setResult(result);
+            setLoading(false);
+        }
     };
     const loadData=()=>
     {
         setLoading(true);
-        getDevicesTemperatures(100).then(res=>{
+        getDevicesTemperatures(5).then(res=>{
             setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
+            //alert('xxxxxx');
             setLoading(false);
         }).catch(err=>{
             setLoading(false);
@@ -53,7 +60,7 @@ export function DeviceTemperature(){
             { socket &&  <SocketBox socket={socket}
                                     eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     notificationMessage='devices temperatures rows updated'
-                                    doAction={loadData}/>}
+                                    doAction={loadDataManually}/>}
             {
                 result &&
                 <TableContainer component={Paper} >

@@ -11,6 +11,16 @@ export const getAllDevices=async ()=> {
     });
 };
 
+export const filterByDate=async(fromDate,toDate)=>{
+    let url = `device/filter/date?fromDate=${fromDate}&toDate=${toDate}`;
+    console.log('filterByDate ' +url);
+    return await deviceAxiosApiInstance.get(url).then(res=>{
+        return res;
+    }).catch(err=>{
+        console.log('filterByDate-error '+ err);
+    });
+};
+
 export const getDevicesTemperatures=async(count)=>{
     let url = `device/transaction/${count}`;
     return await deviceAxiosApiInstance.get(url).then(res=>{
