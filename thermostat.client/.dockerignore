@@ -1,0 +1,4 @@
+node_modules/
+Dockerfile
+.idea/
+config-docker.js

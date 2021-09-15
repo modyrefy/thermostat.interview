@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+    import React, { useEffect, useState } from 'react';
 import {NotificationBox} from "../box/notificationBox";
 export function SocketBox({socket,notificationMessage,eventName,doAction}){
     const [messages, setMessages] = useState({})
@@ -6,8 +6,10 @@ export function SocketBox({socket,notificationMessage,eventName,doAction}){
     useEffect(() => {
         const messageListener = (message) => {
           //  console.log('message '+ message);
+            console.log('socket event start');
             setIsOpen(true)
             doAction(message);
+            console.log('socket event end');
             //doAction();
            /*
             setMessages((prevMessages) => {
