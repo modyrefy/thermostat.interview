@@ -25,5 +25,3 @@ InitConnection().then(() => {
     console.log('✘ db connection failed',err.message)
     process.exit(1);
 })
-
-

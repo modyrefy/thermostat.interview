@@ -11,7 +11,7 @@ export const corsHandler = (
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
     if (request.method === "OPTIONS") {
-        request.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+        // request.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
         return response.status(200).json({});
     }
     next();

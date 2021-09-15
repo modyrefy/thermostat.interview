@@ -25,7 +25,7 @@ amqp.connect(process.env.RABBIT_MQ_CONNECTION as string, function (error0:any, c
             var message:QueueModel = JSON.parse(data.content.toString())
             console.log(" [x] Received message:", message.message );
             //Socket Trigger All Clients
-           io.socket.emit(eventName,  message.message);
+           io.socket.emit(eventName,  JSON.stringify(message));
             console.log('before ' +new Date());
            await delay(3000)
             console.log('after ' +new Date());

@@ -64,10 +64,10 @@ export function DeviceTemperature(props){
     useEffect(() => {
 
         // const newSocket = io(window.REACT_APP_SOCKET_URL);
-        const newSocket = io(process.env.REACT_APP_SOCKET_TEMPERATURE_URL);
+        const newSocket = io(window.REACT_APP_SOCKET_TEMPERATURE_URL);
         setSocket(newSocket);
         console.log('Init Socket', newSocket)
-        console.log(process.env.REACT_APP_SOCKET_TEMPERATURE_URL);
+        console.log(window.REACT_APP_SOCKET_TEMPERATURE_URL);
         // console.log(window.REACT_APP_SOCKET_URL);
         return () => newSocket.close();
     },[setSocket]);
@@ -78,8 +78,8 @@ export function DeviceTemperature(props){
             {loading && <LoadingBox/>}
 
             { socket &&  <SocketBox socket={socket}
-                                    // eventName={window.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
-                                    eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
+                                    eventName={window.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
+                                    //eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     notificationMessage='devices temperatures rows updated'
                                     doAction={loadDataManually} />}
             {

@@ -5,6 +5,7 @@ import helmet from "helmet";
 import {errorHandler} from "../middleware/error";
 import {notFoundHandler} from "../middleware/not-found";
 import {deviceRouter} from "../router/deviceRouter";
+import {userRouter} from "../router/userRouter";
 
 const server = express();
 try {
@@ -20,6 +21,7 @@ try {
     server.use(bodyParser.json());
 // routers
     server.use("/api/device", deviceRouter);
+    server.use("/api/user", userRouter);
 
 // handle errors
     server.use(errorHandler);

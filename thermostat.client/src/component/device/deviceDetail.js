@@ -118,7 +118,7 @@ export function DeviceDetail(props){
 
     useEffect(() => {
         // const newSocket = io(window.REACT_APP_SOCKET_URL);
-        const newSocket = io(process.env.REACT_APP_SOCKET_DEVICE_URL);
+        const newSocket = io(window.REACT_APP_SOCKET_DEVICE_URL);
         setSocket(newSocket);
         console.log(newSocket)
         return () => newSocket.close();
@@ -129,8 +129,8 @@ export function DeviceDetail(props){
 <React.Fragment>
     <MenuItem />
     { socket &&  <SocketBox socket={socket}
-                            // eventName={window.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
-                            eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
+                             eventName={window.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
+                            //eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
                             notificationMessage='devices  rows updated'
                             doAction={loadData}/>}
     <Button variant="contained" color="primary" onClick={() => { setModelPopupOpen(true)}}>Add new device</Button>

@@ -6,8 +6,9 @@ const io = require('socket.io')(server,{
         methods: ['GET', 'POST']
     }
 });
-
+const socketPort:number =parseInt(process.env.SOCKET_PORT as string)
 let any;
+
 module.exports = {
     socket :any = io.on('connection', (socket:any) => {
         console.log('User Socket Connected');
@@ -15,4 +16,4 @@ module.exports = {
     })
 };
 
-server.listen(1923);
+server.listen(socketPort);
