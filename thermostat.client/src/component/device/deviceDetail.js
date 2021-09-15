@@ -22,6 +22,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import io from 'socket.io-client';
 import {SocketBox} from "../socket/socket";
+import {MenuItem} from "../menu/menu";
 
 const useStyles = makeStyles({
     table: {
@@ -125,6 +126,7 @@ export function DeviceDetail(props){
     const registrationProps = {...props, formik, initialValues}
     return(
 <React.Fragment>
+    <MenuItem />
     { socket &&  <SocketBox socket={socket}
                             eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
                             notificationMessage='devices  rows updated'

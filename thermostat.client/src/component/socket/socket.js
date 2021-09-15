@@ -22,7 +22,8 @@ export function SocketBox({socket,notificationMessage,eventName,doAction}){
         return () => {
             socket.off(eventName, messageListener);
         };
-    },[socket])
+    },[socket]);
+
         return(
             <React.Fragment>
                 <NotificationBox open={isOPen}

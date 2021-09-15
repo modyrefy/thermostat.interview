@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import LoadingBox from "../box/loadingBox";
 import { getDevicesTemperatures} from "../../serviceBroker/deviceServiceBroker";
 import {Table, TableBody, TableHead, TableRow, Paper, TableContainer, TableCell} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import io from 'socket.io-client';
 import {SocketBox} from "../socket/socket";
+import {MenuItem} from "../menu/menu";
 var dateFormat = require("dateformat");
 const useStyles = makeStyles({
     table: {
@@ -15,52 +16,68 @@ const useStyles = makeStyles({
 
 export function DeviceTemperature(props){
     const classes = useStyles();
-    const [result, setResult] = useState([]);
+   // const [result, setResult] = useState([]);
+    const result = useRef([]);
     const [loading, setLoading] = useState(false);
     const [socket, setSocket] = useState(null);
+    console.log('Result', result.current);
     const loadDataManually=(message)=>
     {
+        console.log('Result Inside', result.current);
         const request = JSON.parse(message);
-        if(request!=null && request.message !=null) {
+        if(request !=null && request.message !=null) {
             setLoading(true);
-           // console.log(result);
-           result.pop();
-            result.push({...request.message});
-            //console.log('final  result'+ result);
-            setResult(result);
+            result.current.pop();
+           result.current.splice(0,0,request.message);
             setLoading(false);
         }
     };
-    const loadData=()=>
-    {
-        setLoading(true);
-        getDevicesTemperatures(5).then(res=>{
-            setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
-            //alert('xxxxxx');
-            setLoading(false);
-        }).catch(err=>{
-            setLoading(false);
-        });
 
-    }
     useEffect(()=>{
+        //loadData();
+
+        let loadData=()=>
+        {
+            setLoading(true);
+            getDevicesTemperatures(5).then(res => {
+                //setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
+                if(res !== null && res.response !== null && res.response.length !== 0){
+                   // setResult(res.response);
+                    //setResult(res.response);
+                    result.current = [...res.response];
+
+                    console.log('Initial Response:', res.response);
+                }
+
+                //setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
+                //alert('xxxxxx');
+                setLoading(false);
+            }).catch(err=>{
+                setLoading(false);
+            });
+
+        }
         loadData();
-    },[])
+        return () => { loadData = null;}
+    },[]);
+
     useEffect(() => {
+
         const newSocket = io(process.env.REACT_APP_SOCKET_URL);
         setSocket(newSocket);
-        console.log(newSocket)
+        console.log('Init Socket', newSocket)
         return () => newSocket.close();
     },[setSocket]);
 
     return(
         <React.Fragment>
+            <MenuItem />
             {loading && <LoadingBox/>}
 
             { socket &&  <SocketBox socket={socket}
                                     eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     notificationMessage='devices temperatures rows updated'
-                                    doAction={loadDataManually}/>}
+                                    doAction={loadDataManually} />}
             {
                 result &&
                 <TableContainer component={Paper} >
@@ -75,7 +92,7 @@ export function DeviceTemperature(props){
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {result.map((row, index) => (
+                            {result.current.map((row, index) => (
                                 <TableRow key={row.id.toString()}>
                                     <TableCell>{index+1}</TableCell>
                                     <TableCell>{row.id.toString()}</TableCell>
