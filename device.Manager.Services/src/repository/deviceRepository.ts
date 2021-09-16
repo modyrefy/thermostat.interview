@@ -3,6 +3,7 @@ import {DeviceDto} from "../model/uiModel/DeviceDto";
 import {DeviceManagerModel} from "../model/dbModel/deviceManagerModel";
 import {DeviceTemperatureDto} from "../model/uiModel/DeviceTemperatureDto";
 import {TemperatureStatisticsDto} from "../model/uiModel/temperatureStatisticsDto";
+import {UserModel} from "../model/dbModel/userModel";
 
 export const filterByDate=async (fromDate?:Date,toDate?:Date  )=> {
     var response:TemperatureStatisticsDto []=[];
@@ -90,6 +91,24 @@ export const findById = async (id: string) => {
           result._id);
     }
     return null;
+};
+
+export const createDummyDevice = async (item: DeviceDto) => {
+    if (item != null) {
+        await DeviceModel.findById(item.id).then((res: any) => {
+            if (res === null || res === undefined) {
+                var request = new DeviceModel();
+                request._id = item.id;
+                request.deviceName = item.deviceName;
+                request.deviceType = item.deviceType
+                DeviceModel.create(request);
+                console.log(`new dummy device created ${item.id}`);
+            }
+        }).catch(err => {
+            console.log('error in create dummy device ' + err.message);
+        });
+        return null;
+    }
 };
 
 export const createRow = async (item: DeviceDto) => {
