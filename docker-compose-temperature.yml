@@ -1,0 +1,40 @@
+services:
+  device.temperature.Service:
+    environment:
+      - PORT=6001
+      - INTERVAL_MS=1000
+      - DEVICE_ID=61435084c9be2dac1f2c0f91
+      - DEVICE_API_URL=http://device.manager.Services:5001
+      - RABBIT_MQ_CONNECTION=amqp://guest:guest@rabbitmqservice:5672
+      - RABBIT_MQ_DEVICE_MANAGER_QUEUE=TEMPERATURE_QUEUE
+      - SOCKET_EVENT_NAME=TEMPERATURE
+      - MONGODB_CONNECTION_STRING= mongodb://root:123456@database:27017/devices?authSource=admin
+    build:
+      context: './deviceTemperature.Services'
+      dockerfile: './Dockerfile'
+    image: device-temperature-services:0.1
+    #    depends_on:
+    #      - database
+    ports:
+      - "6001:6001"
+    networks:
+      - thermostatinterview_thermostat_nodejs
+  socket.temperature.Service:
+    environment:
+      - INTERVAL_MS=5000
+      #      - RABBIT_MQ_CONNECTION=amqp://admin:tr4H7h8t@10.100.210.24:30672
+      - RABBIT_MQ_CONNECTION=amqp://guest:guest@rabbitmqservice:5672
+      - RABBIT_MQ_QUEUE_NAME=TEMPERATURE_QUEUE
+      - SOCKET_EVENT_NAME=TEMPERATURE
+      - SOCKET_PORT=1234
+    ports:
+      - 8080:1234
+    build:
+      context: './socket.Services'
+      dockerfile: './Dockerfile'
+    image: socket-temperature-services:0.1
+    networks:
+      - thermostatinterview_thermostat_nodejs
+networks:
+  thermostatinterview_thermostat_nodejs:
+    external: true

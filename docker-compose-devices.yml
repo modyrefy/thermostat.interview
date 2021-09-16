@@ -1,0 +1,57 @@
+services:
+#  nginx:
+#    extends:
+#      file: docker-compose.yml
+#      service: database
+  device.manager.Services:
+    restart: always
+    environment:
+      - PORT=5001
+      - RABBIT_MQ_CONNECTION=amqp://guest:guest@rabbitmqservice:5672
+      - RABBIT_MQ_DEVICE_QUEUE=DEVICE_QUEUE
+      - RABBIT_MQ_TYPE=DEVICE
+      - MONGODB_CONNECTION_STRING=mongodb://root:123456@database:27017/devices?authSource=admin
+    build:
+      context: './device.Manager.Services'
+      dockerfile: './Dockerfile'
+    image: device-manager-services:0.1
+#    depends_on:
+#      - database
+#      - rabbitmqservice
+    ports:
+      - "5001:5001"
+    networks:
+      - thermostatinterview_thermostat_nodejs
+  socket.device.Service:
+    restart: always
+    environment:
+      - INTERVAL_MS=5000
+      - RABBIT_MQ_CONNECTION=amqp://guest:guest@rabbitmqservice:5672
+      - RABBIT_MQ_QUEUE_NAME=DEVICE_QUEUE
+      - SOCKET_EVENT_NAME=DEVICE
+      - SOCKET_PORT=1234
+    build:
+      context: './socket.Services'
+      dockerfile: './Dockerfile'
+    ports:
+      - 8081:1234
+    image: socket-device-services:0.1
+    networks:
+      - thermostatinterview_thermostat_nodejs
+  thermostat.client:
+    build:
+      context: './thermostat.client'
+      dockerfile: './Dockerfile'
+    volumes:
+      - ./thermostat.client/config-docker.js:/usr/share/nginx/html/config.js
+    image: thermostat.client:0.1
+    ports:
+      - 3000:80
+    networks:
+      - thermostatinterview_thermostat_nodejs
+
+
+
+networks:
+  thermostatinterview_thermostat_nodejs:
+    external: true

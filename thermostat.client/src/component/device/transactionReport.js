@@ -63,13 +63,10 @@ export function TransactionReport(props){
             const request= {
                 ...values
             };
-            console.log(request.fromDate);
-            console.log(dateFormat(request.fromDate,"mm/dd/yyyy"))
             filterByDate(
                 dateFormat(request.fromDate,"mm/dd/yyyy"),
                 dateFormat(request.toDate,"mm/dd/yyyy")
             ).then(res=>{
-                console.log('xxxxxxxxxxx')
                 setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
                 setLoading(false);
                // formik.setValues({...initialValues})

@@ -75,7 +75,6 @@ export function DeviceDetail(props){
         validationSchema,
         onSubmit: submitHandler,
     })
-
     const handleEditClick = (values) => {
         setModelPopupOpen(true);
         formik.setValues({...values});
@@ -100,7 +99,6 @@ export function DeviceDetail(props){
            setLoading(false);
        });
     };
-
     const loadData=()=>
     {
         setLoading(true);
@@ -115,10 +113,10 @@ export function DeviceDetail(props){
     useEffect(()=>{
         loadData();
     },[]);
-
     useEffect(() => {
-        // const newSocket = io(window.REACT_APP_SOCKET_URL);
         const newSocket = io(window.REACT_APP_SOCKET_DEVICE_URL);
+        console.log('socket url window '+window.REACT_APP_SOCKET_DEVICE_URL);
+        console.log('socket url process'+process.env.REACT_APP_SOCKET_DEVICE_URL);
         setSocket(newSocket);
         console.log(newSocket)
         return () => newSocket.close();
