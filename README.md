@@ -22,6 +22,7 @@
 	- 		It will initialize & run below services 
 				- device  temperature service (responsible for generate random temperature for predefined device-id each N second & push data to rabbit-mq
 				- temperature socket service (handle socket operations related to fetch device temperature  notification from rabbit mq & push to client)
+- opem  browser using http://localhost:3000/  login with admin/admin
 
 - **used technolgoies**
 	- mongodb
@@ -41,7 +42,8 @@
       	- [Ui-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/Ui-layer.png)
       	- [servcie-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/servcie-layer.png)
       	- [service-communication](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png)
+      	- ![](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png)
 	- ![](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/Ui-layer.png)
 	- ![](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/servcie-layer.png)
-	- ![](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png)
+
 
