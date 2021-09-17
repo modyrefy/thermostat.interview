@@ -16,7 +16,7 @@ function LoadingBox() {
         <React.Fragment>
             <Backdrop className={classes.backdrop} open={true}>
                 <CircularProgress />
-                <CircularProgress color="secondary" />
+                {/*<CircularProgress color="secondary" />*/}
                 <br/>
                 <br/>
                 Loading....
