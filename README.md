@@ -24,17 +24,17 @@
 				- temperature socket service (handle socket operations related to fetch device temperature  notification from rabbit mq & push to client)
 
 - **used technolgoies**
-	- 		mongodb
-	- 		rabbitmq
-	- 		node-js
-	- 		typescript
-	- 		react-js
-	- 		socket.io
-	- 		docker
-	- 		docker-compose
+	- mongodb
+	- rabbitmq
+	- node-js
+	- typescript
+	- react-js
+	- socket.io
+	- docker
+	- docker-compose
 
 - repo contain below files
-	- 		postman collections**
+	- postman collections**
  	- 		    [user api postman collection](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.user.postman_collection.json)
  	- 		    [device api postman collection](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.device.postman_collection.json)
 	-**diagrams**
