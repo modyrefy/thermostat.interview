@@ -37,7 +37,7 @@
 	- postman collections**
  	- [user api postman collection](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.user.postman_collection.json)
  	- [device api postman collection](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.device.postman_collection.json)
-	-**diagrams**
-     [Ui-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/Ui-layer.png)
-     [servcie-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/servcie-layer.png)
-     [service-communication](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png)
+	- diagrams**
+      	- [Ui-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/Ui-layer.png)
+      	- [servcie-layer](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/servcie-layer.png)
+      	- [service-communication](https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png)
