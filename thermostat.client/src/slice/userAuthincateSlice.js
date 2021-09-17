@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as Cookies from "js-cookie";
 import deviceAxiosApiInstance from "../axios/devicAxiosExtension";
+import {LocalStorageSet} from "../common/localStorage/localStorageHelper";
 
 
 const slice = createSlice({
@@ -20,6 +21,9 @@ const slice = createSlice({
         },
         setAuthenticateSuccess: (state, action) => {
             const{response,token,remember}=action.payload;
+            if(remember===true) {
+                LocalStorageSet('thermostatToken', token);
+            }
             return {
                 ...state,
                 userAccount: response,//action.payload,
@@ -57,13 +61,13 @@ export const authincateUser = (obj) => async (dispatch, getState) => {
         await sleep(2000);
         const params = {...obj};
         var apiRespopnse = await deviceAxiosApiInstance.post("user/authenticate", params);
-        console.log('apiRespopnse',apiRespopnse)
-        if (apiRespopnse != null ) {
+        console.log('authincate ' +JSON.stringify(apiRespopnse));
+        if (apiRespopnse != null  && apiRespopnse.response !=null) {
             dispatch( setAuthenticateSuccess(
                 {
-                    response: apiRespopnse.Response,
+                    response: apiRespopnse.response,
                     remember: obj.remember,
-                    //token:apiRespopnse.Token
+                    token:apiRespopnse.token
                 }));
         } else {
            // alert( JSON.stringify(apiRespopnse));

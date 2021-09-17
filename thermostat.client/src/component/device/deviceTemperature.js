@@ -20,10 +20,10 @@ export function DeviceTemperature(props){
     const result = useRef([]);
     const [loading, setLoading] = useState(false);
     const [socket, setSocket] = useState(null);
-    console.log('Result', result.current);
-    const loadDataManually=(message)=>
+    //console.log('Result', result.current);
+    const loadDataFromSocket=async(message)=>
     {
-        console.log('Result Inside', result.current);
+        //console.log('Result Inside', result.current);
         const request = JSON.parse(message);
         if(request !=null && request.message !=null) {
             setLoading(true);
@@ -35,27 +35,20 @@ export function DeviceTemperature(props){
 
     useEffect(()=>{
         //loadData();
-
         let loadData=()=>
         {
+            console.log(' window.REACT_APP_DEVICE_API_BASE_URL '+ window.REACT_APP_DEVICE_API_BASE_URL);
             setLoading(true);
             getDevicesTemperatures(5).then(res => {
                 //setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
                 if(res !== null && res.response !== null && res.response.length !== 0){
                    // setResult(res.response);
-                    //setResult(res.response);
                     result.current = [...res.response];
-
-                    console.log('Initial Response:', res.response);
                 }
-
-                //setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
-                //alert('xxxxxx');
                 setLoading(false);
             }).catch(err=>{
                 setLoading(false);
             });
-
         }
         loadData();
         return () => { loadData = null;}
@@ -81,7 +74,7 @@ export function DeviceTemperature(props){
                                     eventName={window.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     //eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     notificationMessage='devices temperatures rows updated'
-                                    doAction={loadDataManually} />}
+                                    doAction={loadDataFromSocket} />}
             {
                 result &&
                 <TableContainer component={Paper} >

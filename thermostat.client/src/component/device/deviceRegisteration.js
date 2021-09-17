@@ -19,15 +19,16 @@ export function DeviceRegisteration(props){
     return(
         <React.Fragment>
             {loading && <LoadingBox/>}
-                <Paper elevation={10} style={paperStyle}>
+                {/*<Paper elevation={10} style={paperStyle}>*/}
                     <Grid>
-                        <Avatar style={avatarStyle} />
+                        {/*<Avatar style={avatarStyle} />*/}
                         <h2>Device Registration</h2>
                         <form onSubmit={formik.handleSubmit}>
                             <table>
                                 <tr>
                                     <td>
                                         <TextField
+                                            style={{width:500}}
                                             label="Device Name"
                                             id="deviceName"
                                             name="deviceName"
@@ -39,8 +40,11 @@ export function DeviceRegisteration(props){
                                             {...formik.getFieldProps('deviceName')}
                                         />
                                     </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <TextField
+                                            style={{width:500}}
                                             label="Device Type"
                                             id="deviceType"
                                             name="deviceType"
@@ -54,7 +58,7 @@ export function DeviceRegisteration(props){
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colSpan={2}>
+                                    <td colSpan={3}>
                                         <Button
                                             type="submit"
                                             color="primary"
@@ -69,7 +73,7 @@ export function DeviceRegisteration(props){
                             </table>
                         </form>
                     </Grid>
-                </Paper>
+                {/*</Paper>*/}
         </React.Fragment>
     );
 };

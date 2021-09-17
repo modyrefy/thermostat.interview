@@ -8,7 +8,8 @@ export class UserDto {
     @AutoMap()
     id?:string;
 
-    constructor(_userName :string,_password:string,_id:string ) {
+
+    constructor(_userName :string,_password:string,_id:string)  {
         this.userName = _userName;
         this.password=_password;
         this.id=_id;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import LoadingBox from "../box/loadingBox";
 import {deleteDevice, getAllDevices, saveDevice} from "../../serviceBroker/deviceServiceBroker";
 import {
@@ -30,11 +30,24 @@ const useStyles = makeStyles({
         maxWidth:800,
     },
 });
+const styles = (theme) => ({
+    root: {
+        margin: 0,
+        padding: theme.spacing(2),
+    },
+    closeButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
+});
 
 export function DeviceDetail(props){
 
     const classes = useStyles();
-    const [result, setResult] = useState([]);
+    //const [result, setResult] = useState([]);
+    const result = useRef([]);
     const [loading, setLoading] = useState(false);
     const [socket, setSocket] = useState(null);
     const [open,setOpen]=useState(false);
@@ -49,7 +62,7 @@ export function DeviceDetail(props){
         deviceType:'' ,
         id:''
     };
-
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
     const submitHandler = async (values) => {
         try {
             setLoading(true)
@@ -57,7 +70,7 @@ export function DeviceDetail(props){
                 ...values
             };
             saveDevice(request).then(res=>{
-                console.log(res);
+               // console.log(res);
                 setLoading(false);
                 setModelPopupOpen(false);
                 formik.setValues({...initialValues})
@@ -69,6 +82,11 @@ export function DeviceDetail(props){
         catch (err) {
             console.log(err);
         }
+    };
+    const handlePopupClose=()=>{
+        setModelPopupOpen(false);
+        formik.setErrors({});
+        formik.setValues({...initialValues});
     };
     const formik = useFormik({
         initialValues,
@@ -86,39 +104,79 @@ export function DeviceDetail(props){
     const handleCloseConfirmBoxClick = (event) => {
        setOpen(false);
     };
-    const handleDeleteConfirmBoxClick=(event)=>{
-
+    const handleDeleteConfirmBoxClick=(event)=> {
         setLoading(true);
-       setOpen(false);
-       deleteDevice(deleteDeviceId).then(res=>{
-           setLoading(false);
-           setDeleteDeviceId(null);
-           loadData();
-       }).catch(err=>{
-           console.log('error '+err.message)
-           setLoading(false);
-       });
-    };
-    const loadData=()=>
-    {
-        setLoading(true);
-        getAllDevices().then(res=>{
-            setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
+        setOpen(false);
+        deleteDevice(deleteDeviceId).then(res => {
             setLoading(false);
-        }).catch(err=>{
+            setDeleteDeviceId(null);
+        }).catch(err => {
+            console.log('error ' + err.message)
             setLoading(false);
         });
-
+    };
+    const loadDataFromSocket=async(message)=>{
+        const request = JSON.parse(message);
+        if(request !=null && request.message !=null) {
+            setLoading(true);
+            //await delay(1000)
+            //console.log('socket action type ' + request.message.actionType);
+            switch (request.message.actionType)
+            {
+                case 1: // add row
+                    //console.log('row addes');
+                    result.current.splice(0,0,request.message);
+                    break;
+                case 2:// update row
+                    let editItem=result.current.find(p=>p.id===request.message.id);
+                    if(editItem!=null)
+                    {
+                        let editIndex=result.current.indexOf(editItem);
+                        result.current.splice(editIndex,1);
+                        result.current.splice(0,0,request.message);
+                    }
+                    else {
+                       // console.log('not able tp get edit item');
+                    }
+                    break;
+                case 3: // delete row
+                    let deleteItem=result.current.find(p=>p.id===request.message.id);
+                    if(deleteItem!=null)
+                    {
+                        let deleteIndex=result.current.indexOf(deleteItem);
+                        console.log('edit item ' + JSON.stringify(deleteIndex));
+                        console.log('edit item item' + deleteIndex);
+                        result.current.splice(deleteIndex,1);
+                    }
+                    break;
+                default:
+                    // do nothing
+                    break;
+            }
+            setLoading(false);
+        }
     }
     useEffect(()=>{
+        let loadData=()=>
+        {
+            setLoading(true);
+            getAllDevices().then(res=>{
+                if(res !== null && res.response !== null && res.response.length !== 0 )
+                {
+                    result.current = [...res.response];
+                }
+                setLoading(false);
+            }).catch(err=>{
+                setLoading(false);
+            });
+        }
         loadData();
+        return () => { loadData = null;}
     },[]);
     useEffect(() => {
         const newSocket = io(window.REACT_APP_SOCKET_DEVICE_URL);
-        console.log('socket url window '+window.REACT_APP_SOCKET_DEVICE_URL);
-        console.log('socket url process'+process.env.REACT_APP_SOCKET_DEVICE_URL);
         setSocket(newSocket);
-        console.log(newSocket)
+        //console.log(newSocket)
         return () => newSocket.close();
     },[setSocket]);
 
@@ -128,21 +186,17 @@ export function DeviceDetail(props){
     <MenuItem />
     { socket &&  <SocketBox socket={socket}
                              eventName={window.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
-                            //eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
                             notificationMessage='devices  rows updated'
-                            doAction={loadData}/>}
+                            doAction={loadDataFromSocket}/>}
     <Button variant="contained" color="primary" onClick={() => { setModelPopupOpen(true)}}>Add new device</Button>
     {open && <ConfirmBox open={open}
                          message='Are You Sure U want to delete Device??!!!!'
                          handleClose={handleCloseConfirmBoxClick}
                          handleConfirm={handleDeleteConfirmBoxClick}/>}
     {loading && <LoadingBox/>}
-    <Dialog  fullWidth={true} onClose={()=>{
-        setModelPopupOpen(false) ;
-        formik.setErrors({});
-        formik.setValues({...initialValues});
-    }
-    } aria-labelledby="customized-dialog-title" open={modelPopupOpen}>
+    <Dialog  fullWidth={true}
+             onClose={handlePopupClose}
+             aria-labelledby="customized-dialog-title" open={modelPopupOpen}>
         <DialogContent dividers>
             <DeviceRegisteration {...registrationProps} />
         </DialogContent>
@@ -162,7 +216,7 @@ export function DeviceDetail(props){
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {result.map((row, index) => (
+                    {result.current.map((row, index) => (
                         <TableRow key={row.id.toString()}>
                             <TableCell>{index+1}</TableCell>
                             <TableCell>{row.id.toString()}</TableCell>

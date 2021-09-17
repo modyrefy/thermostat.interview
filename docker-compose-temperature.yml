@@ -3,7 +3,7 @@ services:
     environment:
       - PORT=6001
       - INTERVAL_MS=1000
-      - DEVICE_ID=61435084c9be2dac1f2c0f91
+      - DEVICE_ID=613ae42839f8c76b2fe01d38
       - DEVICE_API_URL=http://device.manager.Services:5001
       - RABBIT_MQ_CONNECTION=amqp://guest:guest@rabbitmqservice:5672
       - RABBIT_MQ_DEVICE_MANAGER_QUEUE=TEMPERATURE_QUEUE

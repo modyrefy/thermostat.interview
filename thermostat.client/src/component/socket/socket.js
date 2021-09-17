@@ -6,7 +6,7 @@ export function SocketBox({socket,notificationMessage,eventName,doAction}){
     useEffect(() => {
         const messageListener = (message) => {
           //  console.log('message '+ message);
-            console.log('socket url '+window.REACT_APP_SOCKET_DEVICE_URL)
+            console.log('socket url '+window.REACT_APP_SOCKET_TEMPERATURE_URL)
             console.log('socket event start');
             setIsOpen(true)
             doAction(message);

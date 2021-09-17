@@ -3,6 +3,7 @@ import {IUserModel} from "../model/dbModel/userModel";
 import * as UserServices from "../service/userServices";
 import {BaseDto} from "../model/uiModel/baseDto";
 import {ValidationError} from "../model/uiModel/validationError";
+var randomstring = require("randomstring");
 export const userRouter = express.Router();
 
 
@@ -17,6 +18,9 @@ userRouter.post("/authenticate", async (req: Request, res: Response) => {
             errorList.push(new ValidationError('user Name or Password not Valid'));
             result.Errors=errorList;
             res.status(401).send(result);
+        }
+        else {
+            result.token=randomstring.generate();
         }
         res.status(200).send(result);
     } catch (e: any) {
