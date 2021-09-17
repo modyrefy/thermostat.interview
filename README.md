@@ -24,14 +24,14 @@
 				- temperature socket service (handle socket operations related to fetch device temperature  notification from rabbit mq & push to client)
 
 - **used technolgoies**
-	-mongodb
-	-rabbitmq
-	-node-js
-	-typescript
-	-react-js
-	-socket.io
-	-docker
-	-docker-compose
+	- 		mongodb
+	- 		rabbitmq
+	- 		node-js
+	- 		typescript
+	- 		react-js
+	- 		socket.io
+	- 		docker
+	- 		docker-compose
 
 - repo contain below files
 	-**postman collections**
