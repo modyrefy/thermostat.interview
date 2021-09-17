@@ -20,9 +20,13 @@ docker-compose -f docker-compose-temperature.yml up –build
 It will initialize & run below services 
 •	device  temperature service (responsible for generate random temperature for predefined device-id each N second & push data to rabbit-mq
 •	temperature socket service (handle socket operations related to fetch device temperature  notification from rabbit mq & push to client)
-repo contain below files 
-•	user api postman collection 
-•	device api postman collection
-•	
+repo contain below files
+• postman collections
+•	user api postman collection  https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.user.postman_collection.json
+•	device api postman collection https://github.com/modyrefy/thermostat.interview/blob/main/project-info/postman-collection/thermostat.device.postman_collection.json
+• diagrams
+•	Ui-layer  https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/Ui-layer.png
+•	servcie-layer https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/servcie-layer.png
+•	service-communication  https://github.com/modyrefy/thermostat.interview/blob/main/project-info/diagrams/service-communication.png
 
 
