@@ -45,7 +45,7 @@ export const createDeviceManagerRandomTemperatureRequest=async()=> {
         else
         {
             console.log('device not exist please check');
-            process.exit(1);
+            //process.exit(1);
         }
     } catch (err: any) {
         console.log('interval error ' + err.message);

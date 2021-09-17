@@ -29,9 +29,9 @@ function InitRabbitmqConnection(){
                 console.log(" [x] Received message:", message.message );
                 //Socket Trigger All Clients
                 io.socket.emit(eventName,  JSON.stringify(message));
-                console.log('before ' +new Date());
+                //console.log('before ' +new Date());
                 await delay(3000)
-                console.log('after ' +new Date());
+                //console.log('after ' +new Date());
                 channel.ack(data);
             }, {
                 noAck: false

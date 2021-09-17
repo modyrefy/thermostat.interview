@@ -1,7 +1,7 @@
 import axios from "axios";
 const deviceAxiosApiInstance = axios.create({
-     baseURL: window.REACT_APP_DEVICE_API_BASE_URL,
-    //baseURL: process.env.REACT_APP_DEVICE_API_BASE_URL,
+     //baseURL: window.REACT_APP_DEVICE_API_BASE_URL,
+    baseURL: process.env.REACT_APP_DEVICE_API_BASE_URL,
     headers: {
         Accept: "application/json",
     },

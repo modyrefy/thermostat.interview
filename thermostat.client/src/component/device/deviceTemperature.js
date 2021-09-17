@@ -37,7 +37,7 @@ export function DeviceTemperature(props){
         //loadData();
         let loadData=()=>
         {
-            console.log(' window.REACT_APP_DEVICE_API_BASE_URL '+ window.REACT_APP_DEVICE_API_BASE_URL);
+            //console.log(' window.REACT_APP_DEVICE_API_BASE_URL '+ window.REACT_APP_DEVICE_API_BASE_URL);
             setLoading(true);
             getDevicesTemperatures(5).then(res => {
                 //setResult(res !== null && res.response !== null && res.response.length !== 0 ? res.response : null);
@@ -57,10 +57,10 @@ export function DeviceTemperature(props){
     useEffect(() => {
 
         // const newSocket = io(window.REACT_APP_SOCKET_URL);
-        const newSocket = io(window.REACT_APP_SOCKET_TEMPERATURE_URL);
+        const newSocket = io(process.env.REACT_APP_SOCKET_TEMPERATURE_URL);
         setSocket(newSocket);
         console.log('Init Socket', newSocket)
-        console.log(window.REACT_APP_SOCKET_TEMPERATURE_URL);
+        console.log(process.env.REACT_APP_SOCKET_TEMPERATURE_URL);
         // console.log(window.REACT_APP_SOCKET_URL);
         return () => newSocket.close();
     },[setSocket]);
@@ -71,7 +71,7 @@ export function DeviceTemperature(props){
             {loading && <LoadingBox/>}
 
             { socket &&  <SocketBox socket={socket}
-                                    eventName={window.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
+                                    eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     //eventName={process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME}
                                     notificationMessage='devices temperatures rows updated'
                                     doAction={loadDataFromSocket} />}

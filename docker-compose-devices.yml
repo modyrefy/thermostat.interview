@@ -34,7 +34,7 @@ services:
       context: './socket.Services'
       dockerfile: './Dockerfile'
     ports:
-      - 8081:1234
+      - 8080:1234
     image: socket-device-services:0.1
     networks:
       - thermostatinterview_thermostat_nodejs
@@ -42,8 +42,8 @@ services:
     build:
       context: './thermostat.client'
       dockerfile: './Dockerfile'
-    volumes:
-      - ./thermostat.client/config-docker.js:/usr/share/nginx/html/config.js
+#    volumes:
+#      - ./thermostat.client/config-docker.js:/usr/share/nginx/html/config.js
     image: thermostat.client:0.1
     ports:
       - 3000:80

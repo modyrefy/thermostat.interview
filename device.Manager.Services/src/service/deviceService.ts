@@ -24,6 +24,8 @@ export const createRow = async (item: DeviceDto) => {
     var result = await  DeviceRepository.createRow(item);
     if(result !=null  && result.id !==null && result.id !==undefined) {
         const actionType=1;
+        console.log('process.env.RABBIT_MQ_CONNECTION ' + process.env.RABBIT_MQ_CONNECTION);
+        console.log('RABBIT_MQ_DEVICE_QUEUE ' + process.env.RABBIT_MQ_DEVICE_QUEUE);
         SendMessage(new QueueModel
         (
             {... result,actionType},

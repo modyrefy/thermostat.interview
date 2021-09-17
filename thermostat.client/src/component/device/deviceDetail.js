@@ -144,8 +144,8 @@ export function DeviceDetail(props){
                     if(deleteItem!=null)
                     {
                         let deleteIndex=result.current.indexOf(deleteItem);
-                        console.log('edit item ' + JSON.stringify(deleteIndex));
-                        console.log('edit item item' + deleteIndex);
+                        //console.log('edit item ' + JSON.stringify(deleteIndex));
+                       // console.log('edit item item' + deleteIndex);
                         result.current.splice(deleteIndex,1);
                     }
                     break;
@@ -157,6 +157,10 @@ export function DeviceDetail(props){
         }
     }
     useEffect(()=>{
+        console.log('REACT_APP_SOCKET_DEVICE_URL ' +process.env.REACT_APP_SOCKET_DEVICE_URL);
+        console.log('REACT_APP_SOCKET_TEMPERATURE_URL ' +process.env.REACT_APP_SOCKET_TEMPERATURE_URL);
+        console.log('REACT_APP_SOCKET_DEVICE_EVENT_NAME ' +process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME);
+        console.log('REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME ' +process.env.REACT_APP_SOCKET_TEMPERATURE_EVENT_NAME);
         let loadData=()=>
         {
             setLoading(true);
@@ -174,9 +178,9 @@ export function DeviceDetail(props){
         return () => { loadData = null;}
     },[]);
     useEffect(() => {
-        const newSocket = io(window.REACT_APP_SOCKET_DEVICE_URL);
+        const newSocket = io(process.env.REACT_APP_SOCKET_DEVICE_URL);
         setSocket(newSocket);
-        //console.log(newSocket)
+        //console.log('window.REACT_APP_SOCKET_DEVICE_URL'+ window.REACT_APP_SOCKET_DEVICE_URL)
         return () => newSocket.close();
     },[setSocket]);
 
@@ -185,7 +189,7 @@ export function DeviceDetail(props){
 <React.Fragment>
     <MenuItem />
     { socket &&  <SocketBox socket={socket}
-                             eventName={window.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
+                             eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
                             notificationMessage='devices  rows updated'
                             doAction={loadDataFromSocket}/>}
     <Button variant="contained" color="primary" onClick={() => { setModelPopupOpen(true)}}>Add new device</Button>

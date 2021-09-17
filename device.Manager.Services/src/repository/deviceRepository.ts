@@ -81,7 +81,7 @@ export const findAll = async () => {
 
 export const findById = async (id: string) => {
     var result =  await DeviceModel.findById(id);
-    console.log('find-by-id',JSON.stringify(result))
+    //console.log('find-by-id',JSON.stringify(result))
     if (result != null) {
       return new DeviceDto(result.deviceName,
           result.deviceType,
@@ -103,6 +103,9 @@ export const createDummyDevice = async (item: DeviceDto) => {
                 request.deviceType = item.deviceType
                 DeviceModel.create(request);
                 console.log(`new dummy device created ${item.id}`);
+            }
+            else{
+                console.log(`device already exist`);
             }
         }).catch(err => {
             console.log('error in create dummy device ' + err.message);

@@ -28,7 +28,7 @@ services:
       - SOCKET_EVENT_NAME=TEMPERATURE
       - SOCKET_PORT=1234
     ports:
-      - 8080:1234
+      - 8081:1234
     build:
       context: './socket.Services'
       dockerfile: './Dockerfile'

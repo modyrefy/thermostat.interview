@@ -61,7 +61,7 @@ export const authincateUser = (obj) => async (dispatch, getState) => {
         await sleep(2000);
         const params = {...obj};
         var apiRespopnse = await deviceAxiosApiInstance.post("user/authenticate", params);
-        console.log('authincate ' +JSON.stringify(apiRespopnse));
+        //console.log('authincate ' +JSON.stringify(apiRespopnse));
         if (apiRespopnse != null  && apiRespopnse.response !=null) {
             dispatch( setAuthenticateSuccess(
                 {

@@ -27,12 +27,16 @@ export const createRow = async (item: UserDto) => {
 export  const createDummyUser =async (item: UserDto) => {
     if (item != null) {
         UserModel.find({userName: item.userName, password: item.password}).then((res: any) => {
-            if (res === null || res === undefined) {
+            console.log('response' + JSON.stringify(res));
+            if (res === null || res === undefined || res.length===0) {
                 var request = new UserModel();
                 request.userName = item.userName;
                 request.password = item.password
                 UserModel.create(request);
                 console.log(`new dummy user created ${item.id}`);
+            }
+            else{
+                console.log(`user already exist`);
             }
         }).catch(err => {
             console.log('error in create dummy user ' + err.message);
