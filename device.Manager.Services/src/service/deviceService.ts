@@ -54,8 +54,8 @@ export const updateRow = async (item: DeviceDto) => {
     return result;
 };
 
-export const deleteRow = async (item: DeviceDto) => {
-    var result = await  DeviceRepository.deleteRow(item);
+export const deleteRow = async (id: string) => {
+    var result = await  DeviceRepository.deleteRow(id);
     if(result !=null  && result.id !==null && result.id !==undefined)
     {
         const actionType=3;

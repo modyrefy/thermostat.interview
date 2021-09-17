@@ -54,4 +54,4 @@ services:
 
 networks:
   thermostatinterview_thermostat_nodejs:
-    driver: bridge
+    external: true

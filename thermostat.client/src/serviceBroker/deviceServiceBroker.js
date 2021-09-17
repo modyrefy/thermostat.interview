@@ -29,10 +29,10 @@ export const getDevicesTemperatures=async(count)=>{
         console.log('getDevicesTemperatures-error '+ err);
     });
 };
+
 export const deleteDevice=async(id)=>{
-    let url = `device/delete`;
-    var request ={id:id};
-    return await deviceAxiosApiInstance.post(url,request).then(res=>{
+    let url = `device/delete/${id}`;
+    return await deviceAxiosApiInstance.delete(url).then(res=>{
         return res;
     }).catch(err=>{
         console.log('deleteDevice-error '+ err);
@@ -40,13 +40,27 @@ export const deleteDevice=async(id)=>{
 };
 
 export const saveDevice=async(request)=>{
-    console.log('id ' + request.id);
-    let url=request.id !==null && request.id !==undefined && request.id!==''  ? `device/update`:`device/insert`;
-    console.log(url + JSON.stringify(request));
-    return await deviceAxiosApiInstance.post(url,request).then(res=>{
-        return res;
-    }).catch(err=>{
-        console.log('deleteDevice-error '+ err);
-    });
+
+    let url='device/insert';
+   // console.log(url + JSON.stringify(request));
+    if(request.id !==null && request.id !==undefined && request.id!=='')
+    {
+        url=`device/update/${request.id}`;
+        return await deviceAxiosApiInstance.put(url,request).then(res=>{
+            return res;
+        }).catch(err=>{
+            console.log(`insert device error  ${err}`);
+        });
+    }
+    else
+    {
+        url='device/insert';
+        return await deviceAxiosApiInstance.post(url,request).then(res=>{
+            return res;
+        }).catch(err=>{
+            console.log(`insert device error  ${err}`);
+        });
+    }
+
 
 };

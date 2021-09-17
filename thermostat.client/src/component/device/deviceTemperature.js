@@ -5,7 +5,7 @@ import {Table, TableBody, TableHead, TableRow, Paper, TableContainer, TableCell}
 import {makeStyles} from "@material-ui/core/styles";
 import io from 'socket.io-client';
 import {SocketBox} from "../socket/socket";
-import {MenuItem} from "../menu/menu";
+import {MenuComponent} from "../menuComponent/menu";
 var dateFormat = require("dateformat");
 const useStyles = makeStyles({
     table: {
@@ -67,7 +67,7 @@ export function DeviceTemperature(props){
 
     return(
         <React.Fragment>
-            <MenuItem />
+            <MenuComponent />
             {loading && <LoadingBox/>}
 
             { socket &&  <SocketBox socket={socket}

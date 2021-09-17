@@ -79,10 +79,12 @@ deviceRouter.post("/insert", async (req: Request, res: Response) => {
     }
 });
 
-deviceRouter.post("/update", async (req: Request, res: Response) => {
+deviceRouter.put("/update/:id", async (req: Request, res: Response) => {
     var  result  = new BaseDto();
     try {
+        const id: string = req.params.id;
         const item:IDeviceModel = req.body;
+        item.id=id;
         result.response = await DeviceService.updateRow(item);
         res.status(200).send(result);
 
@@ -95,11 +97,12 @@ deviceRouter.post("/update", async (req: Request, res: Response) => {
 });
 
 
-deviceRouter.post("/delete", async (req: Request, res: Response) => {
+deviceRouter.delete("/delete/:id", async (req: Request, res: Response) => {
     var  result  = new BaseDto();
     try {
-        const item:IDeviceModel = req.body;
-        result.response = await DeviceService.deleteRow(item);
+        const id: string = req.params.id;
+       // const item:IDeviceModel = req.body;
+        result.response = await DeviceService.deleteRow(id);
         res.status(200).send(result);
 
     } catch (e: any) {

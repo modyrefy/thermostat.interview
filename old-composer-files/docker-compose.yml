@@ -11,7 +11,7 @@ services:
 #    volumes:
 #      - db:/data/db
     networks:
-      - thermostatinterview_thermostat_nodejs
+      - thermostat_nodejs
     #    expose:
 #      - 27017
   rabbitmqservice:
@@ -26,9 +26,9 @@ services:
 #      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
 #      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - thermostatinterview_thermostat_nodejs
+      - thermostat_nodejs
 volumes:
   db:
 networks:
-  thermostatinterview_thermostat_nodejs:
+  thermostat_nodejs:
     driver: bridge

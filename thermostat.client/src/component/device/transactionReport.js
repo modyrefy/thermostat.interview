@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import LoadingBox from "../box/loadingBox";
+import {MenuComponent} from "../menuComponent/menu";
 import {filterByDate, getDevicesTemperatures, saveDevice} from "../../serviceBroker/deviceServiceBroker";
 import {
     Table,
@@ -89,6 +90,7 @@ export function TransactionReport(props){
 
     return(
         <React.Fragment>
+            <MenuComponent />
             {loading && <LoadingBox/>}
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">

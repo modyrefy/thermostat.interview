@@ -22,7 +22,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import io from 'socket.io-client';
 import {SocketBox} from "../socket/socket";
-import {MenuItem} from "../menu/menu";
+import {MenuComponent} from "../menuComponent/menu";
 
 const useStyles = makeStyles({
     table: {
@@ -120,7 +120,7 @@ export function DeviceDetail(props){
         if(request !=null && request.message !=null) {
             setLoading(true);
             //await delay(1000)
-            //console.log('socket action type ' + request.message.actionType);
+            console.log('socket action type ' + request.message.actionType);
             switch (request.message.actionType)
             {
                 case 1: // add row
@@ -140,6 +140,7 @@ export function DeviceDetail(props){
                     }
                     break;
                 case 3: // delete row
+                    console.log('deleted request'+ JSON.stringify(request.message));
                     let deleteItem=result.current.find(p=>p.id===request.message.id);
                     if(deleteItem!=null)
                     {
@@ -187,7 +188,7 @@ export function DeviceDetail(props){
     const registrationProps = {...props, formik, initialValues}
     return(
 <React.Fragment>
-    <MenuItem />
+    <MenuComponent />
     { socket &&  <SocketBox socket={socket}
                              eventName={process.env.REACT_APP_SOCKET_DEVICE_EVENT_NAME}
                             notificationMessage='devices  rows updated'

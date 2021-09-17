@@ -144,18 +144,16 @@ export const updateRow = async (item: DeviceDto) => {
         }
     }
 }
-;
 
-export const deleteRow = async (item: DeviceDto) => {
-    if (item != null) {
-        var request=await DeviceModel.findById(item.id);
+export const deleteRow = async (id: string) => {
+    if (id !==null && id !==undefined) {
+        var request=await DeviceModel.findById(id);
         if(request!=null)
         {
             request.isActive =false;
-            var response = await DeviceModel.findByIdAndUpdate(item.id,request);
+            var response = await DeviceModel.findByIdAndUpdate(id,request);
             if (response != null) {
-                item.id = response._id;
-                return item;
+                return  new DeviceDto(request.deviceName,request.deviceType,request.createdOn,request.modifiedOn,false,request._id);
             }
             return null;
         }
